@@ -1,0 +1,14 @@
+{
+  "name": "sharepoint-sandbox",
+  "version": "1.2.0",
+  "description": "Build and operate one human-configured SharePoint site plus separately scoped lifecycle, automation, and evidence modules through typed policy-bound tools.",
+  "author": {
+    "name": "srea77"
+  },
+  "keywords": [
+    "sharepoint",
+    "microsoft-365",
+    "site-authoring",
+    "sandbox"
+  ]
+}

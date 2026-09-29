@@ -1,0 +1,67 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/mcpb/main/schemas/mcpb-manifest-v0.4.schema.json",
+  "manifest_version": "0.4",
+  "name": "sharepoint-sandbox",
+  "display_name": "SharePoint Sandbox",
+  "version": "1.2.0",
+  "description": "Policy-bound SharePoint lifecycle authoring for one trusted site.",
+  "long_description": "A trusted local MCP server for inspecting and authoring one human-configured SharePoint Online site, with optional human-scoped Power Automate and evidence modules. Microsoft credentials remain in the local process. The extension exposes typed operations and deliberately provides no site selector, generic Graph/HTTP/PowerShell execution, configuration mutation, or token access.",
+  "author": {
+    "name": "srea77"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "server/sharepoint-mcp.exe",
+    "mcp_config": {
+      "command": "${__dirname}/server/sharepoint-mcp.exe",
+      "args": [
+        "run",
+        "--transport",
+        "stdio"
+      ]
+    }
+  },
+  "tools": [
+    {
+      "name": "site_get_info",
+      "description": "Get the immutable configured SharePoint sandbox identity and metadata."
+    },
+    {
+      "name": "site_inventory",
+      "description": "Inventory supported artifacts in the configured SharePoint sandbox."
+    },
+    {
+      "name": "site_apply_blueprint",
+      "description": "Validate and idempotently apply a declarative site blueprint, with dry-run support."
+    },
+    {
+      "name": "page_get",
+      "description": "Read one modern page and its typed canvas from the configured site."
+    },
+    {
+      "name": "get_configured_scope",
+      "description": "Read the immutable capability and resource-alias policy without credentials."
+    },
+    {
+      "name": "flow_get_status",
+      "description": "Report whether the separately scoped Power Automate backend is configured and authenticated."
+    }
+  ],
+  "tools_generated": true,
+  "keywords": [
+    "sharepoint",
+    "microsoft-365",
+    "sandbox",
+    "site-authoring",
+    "power-automate",
+    "lifecycle"
+  ],
+  "privacy_policies": [
+    "https://privacy.microsoft.com/en-us/privacystatement"
+  ],
+  "compatibility": {
+    "platforms": [
+      "win32"
+    ]
+  }
+}

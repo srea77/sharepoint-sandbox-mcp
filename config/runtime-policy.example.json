@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "permissionsMutationEnabled": false,
+  "allowedExternalEmbedHosts": [],
+  "capabilities": {
+    "siteSettingsWrite": true,
+    "siteThemeApply": true,
+    "navigationWrite": true,
+    "pageWrite": true,
+    "pagePublish": true,
+    "pageUnpublish": true,
+    "setHomepage": true,
+    "listsWrite": true,
+    "recordsWrite": true,
+    "documentsWrite": true,
+    "permissionsWrite": false,
+    "flowRead": false,
+    "flowWrite": false,
+    "flowRunControl": false,
+    "evidenceSearch": true,
+    "oneDriveRead": false,
+    "mailRead": false,
+    "mailDraft": false,
+    "mailSend": false
+  },
+  "scope": {
+    "allowedLists": [],
+    "allowedLibraries": [],
+    "allowedPages": [],
+    "listAliases": {},
+    "libraryAliases": {},
+    "pageAliases": {},
+    "powerAutomate": null,
+    "oneDrive": null,
+    "mail": null
+  }
+}

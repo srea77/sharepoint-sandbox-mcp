@@ -1,0 +1,56 @@
+**/bin/
+**/obj/
+.vs/
+.vscode/
+.idea/
+TestResults/
+artifacts/
+publish/
+coverage/
+*.user
+*.suo
+
+# Trusted local configuration and runtime state (never commit)
+.sharepoint-mcp/
+sharepoint-mcp.config.json
+*.tokens.json
+*.token-cache*
+*.log
+logs/
+authentication-record.json
+pnp-page-state.json
+theme-state.json
+mutations-*.jsonl
+
+# Environment files and local application settings
+.env
+.env.*
+!.env.example
+**/appsettings.Local.json
+**/appsettings.Development.json
+
+# Private keys, certificates, and local data stores
+*.pfx
+*.p12
+*.pem
+*.key
+*.jks
+*.keystore
+*.db
+*.sqlite
+*.sqlite3
+
+# Packaged distribution output
+*.plugin
+*.mcpb
+SharePoint-Sandbox-*.zip
+
+# Tool-owned authentication/cache directories
+.azure/
+.powerapps/
+
+# PowerShell and platform caches
+*.clixml
+*.ps1xml.user
+.DS_Store
+Thumbs.db

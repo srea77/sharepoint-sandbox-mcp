@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "tenantId": "00000000-0000-0000-0000-000000000000",
+  "tenantHostname": "example.sharepoint.com",
+  "siteUrl": "https://example.sharepoint.com/sites/ai-agent-sandbox",
+  "graphSiteId": "example.sharepoint.com,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000",
+  "siteCollectionId": "00000000-0000-0000-0000-000000000000",
+  "webId": "00000000-0000-0000-0000-000000000000",
+  "permissionsMutationEnabled": false,
+  "allowedExternalEmbedHosts": [],
+  "capabilities": {
+    "siteSettingsWrite": false,
+    "siteThemeApply": true,
+    "navigationWrite": true,
+    "pageWrite": true,
+    "pagePublish": true,
+    "pageUnpublish": false,
+    "setHomepage": false,
+    "listsWrite": true,
+    "recordsWrite": true,
+    "documentsWrite": true,
+    "permissionsWrite": false,
+    "flowRead": false,
+    "flowWrite": false,
+    "flowRunControl": false,
+    "evidenceSearch": true,
+    "oneDriveRead": false,
+    "mailRead": false,
+    "mailDraft": false,
+    "mailSend": false
+  },
+  "scope": {
+    "allowedLists": [],
+    "allowedLibraries": [],
+    "allowedPages": [],
+    "listAliases": {},
+    "libraryAliases": {},
+    "pageAliases": {}
+  },
+  "authentication": {
+    "provider": "AzureIdentityDeviceCode",
+    "contextScope": "CurrentUser",
+    "useDeviceCode": true
+  }
+}

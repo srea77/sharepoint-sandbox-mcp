@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "site": {},
+  "lists": [
+    {
+      "name": "MCP Flow Demo Queue",
+      "description": "Disposable queue used to prove SharePoint-triggered Power Automate execution through the site-bound MCP.",
+      "kind": "genericList",
+      "enableVersioning": true,
+      "enableAttachments": false,
+      "columns": [
+        {
+          "name": "Status",
+          "displayName": "Status",
+          "type": "choice",
+          "required": true,
+          "choices": ["Pending", "Processed", "Failed"],
+          "defaultValue": "Pending"
+        },
+        {
+          "name": "CorrelationKey",
+          "displayName": "Correlation Key",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "ProcessedAt",
+          "displayName": "Processed At",
+          "type": "dateTime"
+        },
+        {
+          "name": "ResultMessage",
+          "displayName": "Result Message",
+          "type": "multilineText"
+        }
+      ],
+      "views": [
+        {
+          "name": "Pending",
+          "columns": ["Title", "CorrelationKey", "Status", "Created"],
+          "filter": [{ "field": "Status", "operator": "equals", "value": "Pending" }],
+          "sort": [{ "field": "Created" }],
+          "rowLimit": 100
+        },
+        {
+          "name": "Processed",
+          "columns": ["Title", "CorrelationKey", "Status", "ProcessedAt", "ResultMessage"],
+          "filter": [{ "field": "Status", "operator": "equals", "value": "Processed" }],
+          "sort": [{ "field": "ProcessedAt", "descending": true }],
+          "rowLimit": 100
+        }
+      ],
+      "columnFormatting": {
+        "Status": {
+          "$schema": "https://developer.microsoft.com/json-schemas/sp/v2/column-formatting.schema.json",
+          "elmType": "div",
+          "attributes": {
+            "class": "=if(@currentField == 'Processed','sp-field-severity--good',if(@currentField == 'Failed','sp-field-severity--blocked','sp-field-severity--warning'))"
+          },
+          "txtContent": "@currentField"
+        }
+      }
+    }
+  ],
+  "pages": [],
+  "navigation": []
+}

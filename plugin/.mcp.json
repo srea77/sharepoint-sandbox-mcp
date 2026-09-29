@@ -1,0 +1,10 @@
+{
+  "sharepoint-sandbox": {
+    "command": "${CLAUDE_PLUGIN_ROOT}/server/sharepoint-mcp.exe",
+    "args": [
+      "run",
+      "--transport",
+      "stdio"
+    ]
+  }
+}

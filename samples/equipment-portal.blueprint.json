@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "title": "Equipment Request Portal",
+    "description": "Request, approve, and document employee equipment.",
+    "theme": {
+      "name": "Equipment Portal",
+      "isInverted": false,
+      "palette": {
+        "themePrimary": "#005A9E",
+        "themeLighterAlt": "#F3F9FD",
+        "themeLight": "#C7E0F4",
+        "themeSecondary": "#2B88D8",
+        "themeDarkAlt": "#106EBE",
+        "themeDark": "#004578",
+        "themeDarker": "#002050",
+        "neutralLighterAlt": "#FAF9F8",
+        "neutralLighter": "#F3F2F1",
+        "neutralLight": "#EDEBE9",
+        "neutralSecondary": "#605E5C",
+        "neutralPrimary": "#242424",
+        "neutralDark": "#201F1E",
+        "black": "#000000",
+        "white": "#FFFFFF"
+      }
+    }
+  },
+  "lists": [
+    {
+      "name": "Equipment Catalog",
+      "description": "Approved equipment models available for requests.",
+      "kind": "genericList",
+      "enableVersioning": true,
+      "columns": [
+        { "name": "ItemName", "displayName": "Item Name", "type": "text", "required": true },
+        { "name": "Category", "displayName": "Category", "type": "choice", "required": true, "choices": ["Laptop", "Monitor", "Phone", "Accessory", "Other"] },
+        { "name": "Manufacturer", "displayName": "Manufacturer", "type": "text" },
+        { "name": "Model", "displayName": "Model", "type": "text" },
+        { "name": "StandardCost", "displayName": "Standard Cost", "type": "currency" },
+        { "name": "Active", "displayName": "Active", "type": "boolean", "defaultValue": true }
+      ],
+      "views": [
+        { "name": "Active Equipment", "columns": ["ItemName", "Category", "Manufacturer", "Model", "StandardCost", "Active"], "filter": [{ "field": "Active", "operator": "equals", "value": true }], "sort": [{ "field": "Category" }, { "field": "ItemName" }], "rowLimit": 100, "isDefault": true }
+      ]
+    },
+    {
+      "name": "Equipment Requests",
+      "description": "Employee equipment requests and approval status.",
+      "kind": "genericList",
+      "enableVersioning": true,
+      "enableAttachments": true,
+      "columns": [
+        { "name": "Requestor", "displayName": "Requestor", "type": "person", "required": true },
+        { "name": "Department", "displayName": "Department", "type": "choice", "required": true, "choices": ["Engineering", "Operations", "Finance", "Human Resources", "Sales", "Other"] },
+        { "name": "EquipmentType", "displayName": "Equipment Type", "type": "choice", "required": true, "choices": ["Laptop", "Monitor", "Phone", "Accessory", "Other"] },
+        { "name": "CatalogItem", "displayName": "Catalog Item", "type": "lookup", "lookupList": "Equipment Catalog", "lookupColumn": "ItemName" },
+        { "name": "Cost", "displayName": "Estimated Cost", "type": "currency" },
+        { "name": "Justification", "displayName": "Business Justification", "type": "multilineText", "required": true },
+        { "name": "RequiredBy", "displayName": "Required By", "type": "dateTime" },
+        { "name": "Status", "displayName": "Status", "type": "choice", "required": true, "choices": ["Submitted", "Approved", "Rejected"], "defaultValue": "Submitted" },
+        { "name": "ApprovedBy", "displayName": "Approved By", "type": "person" },
+        { "name": "ApprovedDate", "displayName": "Approved Date", "type": "dateTime" }
+      ],
+      "views": [
+        { "name": "My Requests", "columns": ["Title", "EquipmentType", "CatalogItem", "RequiredBy", "Status"], "filter": [{ "field": "Requestor", "operator": "equals", "value": "[Me]" }], "sort": [{ "field": "RequiredBy" }], "rowLimit": 100 },
+        { "name": "Pending Approval", "columns": ["Title", "Requestor", "Department", "EquipmentType", "Cost", "RequiredBy", "Status"], "filter": [{ "field": "Status", "operator": "equals", "value": "Submitted" }], "sort": [{ "field": "RequiredBy" }], "rowLimit": 100 },
+        { "name": "Approved", "columns": ["Title", "Requestor", "EquipmentType", "Cost", "ApprovedBy", "ApprovedDate", "Status"], "filter": [{ "field": "Status", "operator": "equals", "value": "Approved" }], "sort": [{ "field": "ApprovedDate", "descending": true }], "rowLimit": 100 },
+        { "name": "All Requests", "columns": ["Title", "Requestor", "Department", "EquipmentType", "Cost", "RequiredBy", "Status"], "sort": [{ "field": "RequiredBy" }], "rowLimit": 100, "isDefault": true }
+      ],
+      "form": {
+        "sections": [
+          { "displayName": "Requester", "fields": ["Requestor", "Department"] },
+          { "displayName": "Request", "fields": ["Equipment Type", "Catalog Item", "Estimated Cost", "Business Justification", "Required By"] },
+          { "displayName": "Approval", "fields": ["Status", "Approved By", "Approved Date"] }
+        ],
+        "fieldOrder": ["Requestor", "Department", "Equipment Type", "Catalog Item", "Estimated Cost", "Business Justification", "Required By", "Status", "Approved By", "Approved Date"],
+        "readOnlyFields": ["Approved By", "Approved Date"]
+      },
+      "columnFormatting": {
+        "Status": {
+          "$schema": "https://developer.microsoft.com/json-schemas/sp/v2/column-formatting.schema.json",
+          "elmType": "div",
+          "attributes": { "class": "=if(@currentField == 'Approved','sp-field-severity--good',if(@currentField == 'Rejected','sp-field-severity--blocked','sp-field-severity--warning'))" },
+          "txtContent": "@currentField"
+        }
+      }
+    },
+    {
+      "name": "Equipment Documentation",
+      "description": "Policies, setup guides, and model documentation.",
+      "kind": "documentLibrary",
+      "enableVersioning": true,
+      "columns": [
+        { "name": "Category", "displayName": "Category", "type": "choice", "choices": ["Policy", "Setup Guide", "Model Documentation", "Other"] },
+        { "name": "EquipmentModel", "displayName": "Equipment Model", "type": "text" }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "Equipment-Portal.aspx",
+      "title": "Equipment Request Portal",
+      "description": "Request equipment, review approvals, and find documentation.",
+      "publish": true,
+      "setAsHome": true,
+      "titleRegion": {
+        "layout": "colorBlock",
+        "textAlignment": "center",
+        "enableGradientEffect": true,
+        "showAuthor": false,
+        "showPublishedDate": false,
+        "textAboveTitle": "WORKPLACE SERVICES"
+      },
+      "sections": [
+        {
+          "key": "hero",
+          "layout": "fullWidth",
+          "emphasis": "none",
+          "components": [
+            {
+              "key": "equipment-hero",
+              "type": "hero",
+              "column": 1,
+              "order": 1,
+              "properties": {},
+              "hero": {
+                "layout": "tiles",
+                "items": [
+                  { "title": "Submit a request", "description": "Start a new equipment request and track its approval.", "targetList": "Equipment Requests", "callToAction": "Request equipment" },
+                  { "title": "Browse standard equipment", "description": "Review approved models and standard costs.", "targetList": "Equipment Catalog", "callToAction": "Browse catalog" },
+                  { "title": "Read setup guides", "description": "Find policies, documentation, and setup instructions.", "targetList": "Equipment Documentation", "callToAction": "Open documentation" }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "welcome",
+          "layout": "oneColumn",
+          "emphasis": "soft",
+          "components": [
+            { "key": "intro", "type": "text", "column": 1, "order": 1, "properties": { "content": "<h2>Everything you need for workplace equipment</h2><p>Submit and track requests, review the approved catalog, and find setup documentation from one place.</p>" } }
+          ]
+        },
+        {
+          "key": "work",
+          "layout": "twoColumn",
+          "emphasis": "none",
+          "components": [
+            { "key": "pending-requests", "type": "list", "column": 1, "order": 1, "properties": {}, "list": { "listName": "Equipment Requests", "viewName": "Pending Approval", "showCommandBar": true, "showSeeAll": true } },
+            { "key": "equipment-documents", "type": "documentLibrary", "column": 2, "order": 1, "properties": {}, "list": { "listName": "Equipment Documentation", "showCommandBar": true, "showSeeAll": true } }
+          ]
+        },
+        {
+          "key": "updates",
+          "layout": "twoColumn",
+          "emphasis": "neutral",
+          "components": [
+            { "key": "equipment-news", "type": "news", "column": 1, "order": 1, "properties": {}, "news": { "layout": "list", "maxItems": 4, "showTitle": true } },
+            { "key": "equipment-events", "type": "events", "column": 2, "order": 1, "properties": {}, "events": { "layout": "filmstrip", "maxItems": 6, "showTitle": true } }
+          ]
+        }
+      ]
+    }
+  ],
+  "navigation": [
+    { "key": "equipment-home", "title": "Equipment Home", "target": "SitePages/Equipment-Portal.aspx" },
+    { "key": "equipment-requests", "title": "Equipment Requests", "targetList": "Equipment Requests" },
+    { "key": "equipment-catalog", "title": "Equipment Catalog", "targetList": "Equipment Catalog" },
+    { "key": "equipment-documentation", "title": "Equipment Documentation", "targetList": "Equipment Documentation" }
+  ]
+}
